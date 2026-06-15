@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex,nofollow" />
   <title>Bay Ridge Bicycles — Mobile Preview Concept</title>
-  <meta name="description" content="Mobile-first preview concept for Bay Ridge Bicycles: tune-ups, repairs, click-to-call, and repair request flow." />
+  <meta name="description" content="Mobile-first preview concept for Bay Ridge Bicycles: bike sales, tune-ups, repairs, click-to-call, and request flow." />
   <style>
     :root {
       --bg: #f7f1e5;
@@ -293,7 +293,7 @@
   </style>
 </head>
 <body>
-  <div class="preview-bar"><strong>Preview concept</strong> — not the official Bay Ridge Bicycles site yet. Built to show what a mobile booking + repair request page could look like.</div>
+  <div class="preview-bar"><strong>Preview concept</strong> — not the official Bay Ridge Bicycles site yet. Built to show what a mobile bike sales + service page could look like.</div>
 
   <nav class="nav" aria-label="Main navigation">
     <a class="brand" href="#top" aria-label="Bay Ridge Bicycles preview home">
@@ -301,12 +301,12 @@
       <span>Bay Ridge Bicycles</span>
     </a>
     <div class="nav-links">
-      <a href="#services">Services</a>
+      <a href="#services">Bikes + Service</a>
       <a href="#book">Book</a>
       <a href="#reviews">Reviews</a>
       <a href="#visit">Visit</a>
     </div>
-    <a class="nav-cta" href="#book">Book a tune-up</a>
+    <a class="nav-cta" href="#book">Shop bikes / book service</a>
   </nav>
 
   <main id="top">
@@ -314,25 +314,26 @@
       <div class="wrap hero-grid">
         <div>
           <span class="eyebrow"><span class="dot"></span> Mobile-ready preview · email or text this link</span>
-          <h1>Bay Ridge <span class="grad">tune-ups</span> made easy.</h1>
-          <p class="hero-copy">A faster phone-first website for repairs, tune-ups, bike assembly, and shop visits — so riders can call, request service, or get directions without digging around.</p>
+          <h1>Bay Ridge <span class="grad">bikes</span> made easy.</h1>
+          <p class="hero-copy">A faster phone-first website for buying bikes, repairs, tune-ups, bike assembly, parts, and shop visits — so riders can call, ask about inventory, request service, or get directions without digging around.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#book">Start a repair request →</a>
+            <a class="btn btn-primary" href="#book">Ask about bikes or service →</a>
             <a class="btn btn-secondary" href="tel:+16469865221">Call the shop</a>
           </div>
-          <p class="mini-note">Live version can route requests directly to the shop by email/SMS and connect to a scheduling calendar.</p>
+          <p class="mini-note">Live version can route bike inquiries and repair requests directly to the shop by email/SMS and connect to a scheduling calendar.</p>
         </div>
 
         <aside class="phone-card" aria-label="Mobile preview mockup">
           <div class="phone-screen">
-            <div class="phone-photo"><strong>Quick service from your phone.</strong></div>
+            <div class="phone-photo"><strong>New bikes + quick service from your phone.</strong></div>
             <div class="phone-body">
               <div class="phone-row">
-                <div class="phone-pill">⚡ Same-day fixes</div>
+                <div class="phone-pill">🚲 Bikes for sale</div>
                 <div class="phone-pill">📍 9124 4th Ave</div>
               </div>
-              <a class="btn btn-primary" style="width:100%;" href="#book">Book tune-up</a>
+              <a class="btn btn-primary" style="width:100%;" href="#book">Ask about bikes</a>
               <div class="phone-list">
+                <div class="phone-item"><b>New bikes in stock</b><span>Ask what fits your ride, size, and budget.</span></div>
                 <div class="phone-item"><b>Flat repair</b><span>Tell us tire size + timing.</span></div>
                 <div class="phone-item"><b>New bike assembly</b><span>Boxed bike? Request build slot.</span></div>
                 <div class="phone-item"><b>Brake / gear issue</b><span>Describe the problem before arriving.</span></div>
@@ -346,11 +347,12 @@
     <section id="services">
       <div class="wrap">
         <div class="section-head">
-          <div class="label">Services</div>
+          <div class="label">Bikes + service</div>
           <h2>Everything riders ask for first.</h2>
-          <p class="lead">The page is structured around the actions a customer wants on their phone: repair, tune-up, assembly, parts, directions, and a direct call.</p>
+          <p class="lead">The page is structured around the actions a customer wants on their phone: new bikes, used bikes, repair, tune-up, assembly, parts, directions, and a direct call.</p>
         </div>
         <div class="cards">
+          <article class="card"><div class="icon">🚲</div><h3>Bikes for sale</h3><p>New bikes, used bikes, kids bikes, commuters, road bikes, e-bikes, sizing help, and local advice before buying.</p></article>
           <article class="card"><div class="icon">🔧</div><h3>Tune-ups</h3><p>Brakes, shifting, drivetrain, tires, and safety check before the next ride.</p></article>
           <article class="card"><div class="icon">🛠️</div><h3>Repairs</h3><p>Flat fixes, brake adjustments, wheel truing, part replacement, and quick diagnostics.</p></article>
           <article class="card"><div class="icon">📦</div><h3>Bike assembly</h3><p>Boxed bike builds, new parts, and safe setup for riders who bought online.</p></article>
@@ -363,8 +365,8 @@
         <div class="book-grid">
           <div class="book-copy">
             <div class="label">Lead capture + scheduling</div>
-            <h2>Let riders request service before they walk in.</h2>
-            <p class="lead">This is the money part: the live version sends repair requests to the shop, can text customers back, and can connect to a scheduling calendar.</p>
+            <h2>Let riders ask before they walk in.</h2>
+            <p class="lead">This is the money part: the live version sends bike sales questions and repair requests to the shop, can text customers back, and can connect to a scheduling calendar.</p>
             <div class="hero-actions">
               <a class="btn btn-primary" href="tel:+16469865221">Call now</a>
               <a class="btn btn-secondary" href="#visit">Get directions</a>
@@ -383,6 +385,7 @@
             <div class="field">
               <label for="service">What do you need?</label>
               <select id="service" name="service">
+                <option>Buying a bike</option>
                 <option>Tune-up</option>
                 <option>Flat / tire repair</option>
                 <option>Brake or gear issue</option>
@@ -395,9 +398,9 @@
               <label for="message">Notes</label>
               <textarea id="message" name="message" placeholder="Tell us what is happening with the bike..."></textarea>
             </div>
-            <button class="btn btn-primary" type="submit">Preview request flow</button>
-            <div class="inline-result" id="result">Demo request captured. In the live build this would send to the shop by email/SMS.</div>
-            <div class="form-note">Demo only: in the paid/live build this button sends the request to the shop by email/SMS and logs the lead.</div>
+            <button class="btn btn-primary" type="submit">Preview inquiry flow</button>
+            <div class="inline-result" id="result">Demo inquiry captured. In the live build this would send to the shop by email/SMS.</div>
+            <div class="form-note">Demo only: in the paid/live build this button sends the inquiry to the shop by email/SMS and logs the lead.</div>
           </form>
         </div>
       </div>
@@ -443,9 +446,9 @@
       <div class="wrap bottom-box">
         <div>
           <h2 style="font-size:clamp(2rem,7vw,3.5rem);">Ready to turn this into the real site?</h2>
-          <p>We can connect the real contact form, scheduling, domain, analytics, and follow-up once approved.</p>
+          <p>We can connect the real contact form, bike inventory/inquiry flow, scheduling, domain, analytics, and follow-up once approved.</p>
         </div>
-        <a class="btn btn-primary" href="mailto:?subject=Bay%20Ridge%20Bicycles%20mobile%20site%20preview&body=Here%20is%20the%20mobile%20preview%20concept%20for%20Bay%20Ridge%20Bicycles:%20%0A%0A[PASTE%20PREVIEW%20LINK%20HERE]%0A%0AIt%20shows%20a%20phone-first%20repair%20request,%20click-to-call,%20directions,%20reviews,%20and%20service%20sections.">Email this preview</a>
+        <a class="btn btn-primary" href="mailto:?subject=Bay%20Ridge%20Bicycles%20mobile%20site%20preview&body=Here%20is%20the%20mobile%20preview%20concept%20for%20Bay%20Ridge%20Bicycles:%20%0A%0A[PASTE%20PREVIEW%20LINK%20HERE]%0A%0AIt%20shows%20a%20phone-first%20bike%20sales%20inquiry,%20repair%20request,%20click-to-call,%20directions,%20reviews,%20and%20service%20sections.">Email this preview</a>
       </div>
     </section>
   </main>
