@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Bay Ridge Bicycles — Mobile Preview Concept</title>
+  <meta name="description" content="Mobile-first preview concept for Bay Ridge Bicycles: tune-ups, repairs, click-to-call, and repair request flow." />
+  <style>
+    :root {
+      --bg: #f7f1e5;
+      --card: #fffaf0;
+      --ink: #172033;
+      --muted: #5e6574;
+      --line: rgba(23, 32, 51, 0.14);
+      --blue: #315b83;
+      --blue-dark: #203c58;
+      --copper: #c97825;
+      --copper-dark: #9d5818;
+      --green: #1d8f5a;
+      --shadow: 0 22px 60px rgba(23, 32, 51, 0.14);
+      --radius: 26px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 80% 0%, rgba(49, 91, 131, 0.20), transparent 34rem),
+        radial-gradient(circle at 10% 8%, rgba(201, 120, 37, 0.14), transparent 28rem),
+        var(--bg);
+      line-height: 1.5;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea, select { font: inherit; }
+
+    .preview-bar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(23, 32, 51, 0.95);
+      color: white;
+      padding: 0.65rem 1rem;
+      font-size: 0.82rem;
+      text-align: center;
+      backdrop-filter: blur(16px);
+    }
+    .preview-bar strong { color: #ffd59b; }
+
+    .nav {
+      position: sticky;
+      top: 2.55rem;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 1rem;
+      background: rgba(247, 241, 229, 0.78);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(18px);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: linear-gradient(135deg, var(--copper), var(--blue));
+      box-shadow: 0 10px 25px rgba(201, 120, 37, 0.25);
+    }
+    .nav-links { display: none; gap: 1.2rem; align-items: center; font-size: 0.95rem; font-weight: 700; color: var(--muted); }
+    .nav-cta { display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; background: var(--copper); color: white; padding: 0.75rem 1rem; font-weight: 850; box-shadow: 0 12px 28px rgba(201, 120, 37, 0.22); }
+
+    .wrap { width: min(1120px, calc(100% - 2rem)); margin: 0 auto; }
+
+    .hero {
+      position: relative;
+      min-height: calc(100svh - 96px);
+      display: grid;
+      align-items: center;
+      padding: 3rem 0 2.5rem;
+      overflow: hidden;
+    }
+    .hero-grid { display: grid; gap: 2rem; align-items: center; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      width: fit-content;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 240, 0.72);
+      border-radius: 999px;
+      padding: 0.45rem 0.75rem;
+      color: var(--muted);
+      font-size: 0.83rem;
+      font-weight: 800;
+      backdrop-filter: blur(12px);
+    }
+    .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--green); box-shadow: 0 0 0 5px rgba(29, 143, 90, 0.14); }
+    h1 {
+      margin: 1.2rem 0 1rem;
+      font-size: clamp(3.1rem, 15vw, 6.5rem);
+      line-height: 0.88;
+      letter-spacing: -0.08em;
+      max-width: 780px;
+    }
+    .grad { color: var(--copper); }
+    .hero-copy { margin: 0; max-width: 640px; color: rgba(23, 32, 51, 0.78); font-size: clamp(1.05rem, 3.8vw, 1.35rem); }
+    .hero-actions { display: grid; gap: 0.75rem; margin-top: 1.5rem; }
+    .btn {
+      min-height: 54px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.95rem 1.15rem;
+      font-weight: 900;
+      border: 1px solid transparent;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+      cursor: pointer;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary { background: var(--copper); color: white; box-shadow: 0 18px 35px rgba(201, 120, 37, 0.25); }
+    .btn-secondary { background: rgba(255, 250, 240, 0.76); border-color: var(--line); color: var(--ink); }
+    .btn-blue { background: var(--blue); color: white; box-shadow: 0 18px 35px rgba(49, 91, 131, 0.22); }
+    .mini-note { margin-top: 0.9rem; color: var(--muted); font-size: 0.92rem; }
+
+    .phone-card {
+      position: relative;
+      border-radius: 36px;
+      background: #111827;
+      padding: 0.7rem;
+      box-shadow: var(--shadow);
+      transform: rotate(1.5deg);
+      max-width: 380px;
+      margin: 0 auto;
+    }
+    .phone-screen {
+      border-radius: 29px;
+      overflow: hidden;
+      background: var(--card);
+      min-height: 560px;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .phone-photo {
+      height: 210px;
+      background:
+        linear-gradient(180deg, transparent, rgba(23,32,51,0.72)),
+        url("assets/bridge-assembled.png") center / cover no-repeat,
+        linear-gradient(135deg, var(--blue), var(--copper));
+      display: flex;
+      align-items: end;
+      padding: 1rem;
+      color: white;
+    }
+    .phone-photo strong { font-size: 1.35rem; line-height: 1; letter-spacing: -0.04em; }
+    .phone-body { padding: 1rem; }
+    .phone-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem; margin: 0.8rem 0; }
+    .phone-pill { background: rgba(49,91,131,0.09); border: 1px solid rgba(49,91,131,0.14); border-radius: 16px; padding: 0.8rem; font-weight: 850; font-size: 0.86rem; }
+    .phone-list { display: grid; gap: 0.55rem; margin-top: 1rem; }
+    .phone-item { border: 1px solid var(--line); border-radius: 17px; padding: 0.85rem; background: rgba(255,255,255,0.44); }
+    .phone-item b { display:block; }
+    .phone-item span { color: var(--muted); font-size: 0.86rem; }
+
+    section { padding: 4.5rem 0; }
+    .section-head { display: grid; gap: 0.75rem; margin-bottom: 1.6rem; }
+    .label { color: var(--copper-dark); text-transform: uppercase; font-size: 0.74rem; letter-spacing: 0.24em; font-weight: 900; }
+    h2 { margin: 0; font-size: clamp(2rem, 8vw, 4rem); line-height: 0.96; letter-spacing: -0.06em; }
+    .lead { margin: 0; color: var(--muted); font-size: 1.08rem; max-width: 720px; }
+
+    .cards { display: grid; gap: 1rem; }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 250, 240, 0.72);
+      box-shadow: 0 12px 32px rgba(23, 32, 51, 0.06);
+      padding: 1.2rem;
+      backdrop-filter: blur(12px);
+    }
+    .card h3 { margin: 0 0 0.35rem; font-size: 1.15rem; letter-spacing: -0.03em; }
+    .card p { margin: 0; color: var(--muted); }
+    .icon { width: 42px; height: 42px; border-radius: 15px; display: grid; place-items: center; background: rgba(49, 91, 131, 0.10); margin-bottom: 0.9rem; font-size: 1.3rem; }
+
+    .book {
+      border-radius: 34px;
+      color: white;
+      background:
+        radial-gradient(circle at 80% 0%, rgba(201,120,37,0.32), transparent 24rem),
+        linear-gradient(135deg, var(--ink), var(--blue-dark));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .book-grid { display: grid; gap: 1.2rem; padding: 1.1rem; }
+    .book-copy { padding: 1.2rem 0.6rem 0; }
+    .book .label { color: #ffd59b; }
+    .book .lead { color: rgba(255,255,255,0.75); }
+    .form {
+      display: grid;
+      gap: 0.8rem;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 26px;
+      padding: 1rem;
+      backdrop-filter: blur(12px);
+    }
+    .field { display: grid; gap: 0.35rem; }
+    .field label { color: rgba(255,255,255,0.70); font-size: 0.78rem; font-weight: 850; text-transform: uppercase; letter-spacing: 0.12em; }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.95);
+      color: var(--ink);
+      border-radius: 16px;
+      padding: 0.9rem;
+      outline: none;
+    }
+    .field textarea { min-height: 96px; resize: vertical; }
+    .form-note { color: rgba(255,255,255,0.65); font-size: 0.86rem; }
+
+    .proof { display: grid; gap: 1rem; }
+    .quote { font-size: 1.05rem; color: rgba(23,32,51,0.82); }
+    .stars { color: var(--copper); letter-spacing: 0.07em; }
+
+    .visit {
+      display: grid;
+      gap: 1rem;
+    }
+    .map-card {
+      min-height: 290px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(135deg, rgba(49,91,131,0.18), rgba(201,120,37,0.14)),
+        var(--card);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 1.2rem;
+      box-shadow: 0 12px 32px rgba(23, 32, 51, 0.06);
+    }
+
+    .bottom-cta { padding: 3.5rem 0 5rem; }
+    .bottom-box {
+      border-radius: 34px;
+      background: var(--ink);
+      color: white;
+      padding: 1.4rem;
+      display: grid;
+      gap: 1rem;
+      box-shadow: var(--shadow);
+    }
+    .bottom-box p { color: rgba(255,255,255,0.72); margin: 0; }
+    footer { border-top: 1px solid var(--line); padding: 1.5rem 0; color: var(--muted); font-size: 0.9rem; }
+
+    .inline-result {
+      display: none;
+      border-radius: 16px;
+      background: rgba(29, 143, 90, 0.16);
+      border: 1px solid rgba(29, 143, 90, 0.28);
+      color: white;
+      padding: 0.85rem;
+      font-weight: 800;
+    }
+    .inline-result.show { display: block; }
+
+    @media (min-width: 760px) {
+      .preview-bar { font-size: 0.9rem; }
+      .nav { top: 2.75rem; padding-inline: 2rem; }
+      .nav-links { display: flex; }
+      .hero-actions { display: flex; align-items: center; }
+      .hero-grid { grid-template-columns: 1.05fr 0.85fr; }
+      .cards { grid-template-columns: repeat(3, 1fr); }
+      .book-grid { grid-template-columns: 0.85fr 1.15fr; padding: 1.4rem; align-items: center; }
+      .book-copy { padding: 2rem; }
+      .proof { grid-template-columns: repeat(3, 1fr); }
+      .visit { grid-template-columns: 0.9fr 1.1fr; align-items: stretch; }
+      .bottom-box { grid-template-columns: 1fr auto; align-items: center; padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-bar"><strong>Preview concept</strong> — not the official Bay Ridge Bicycles site yet. Built to show what a mobile booking + repair request page could look like.</div>
+
+  <nav class="nav" aria-label="Main navigation">
+    <a class="brand" href="#top" aria-label="Bay Ridge Bicycles preview home">
+      <span class="brand-mark">B</span>
+      <span>Bay Ridge Bicycles</span>
+    </a>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#book">Book</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#visit">Visit</a>
+    </div>
+    <a class="nav-cta" href="#book">Book a tune-up</a>
+  </nav>
+
+  <main id="top">
+    <header class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="eyebrow"><span class="dot"></span> Mobile-ready preview · email or text this link</span>
+          <h1>Bay Ridge <span class="grad">tune-ups</span> made easy.</h1>
+          <p class="hero-copy">A faster phone-first website for repairs, tune-ups, bike assembly, and shop visits — so riders can call, request service, or get directions without digging around.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#book">Start a repair request →</a>
+            <a class="btn btn-secondary" href="tel:+16469865221">Call the shop</a>
+          </div>
+          <p class="mini-note">Live version can route requests directly to the shop by email/SMS and connect to a scheduling calendar.</p>
+        </div>
+
+        <aside class="phone-card" aria-label="Mobile preview mockup">
+          <div class="phone-screen">
+            <div class="phone-photo"><strong>Quick service from your phone.</strong></div>
+            <div class="phone-body">
+              <div class="phone-row">
+                <div class="phone-pill">⚡ Same-day fixes</div>
+                <div class="phone-pill">📍 9124 4th Ave</div>
+              </div>
+              <a class="btn btn-primary" style="width:100%;" href="#book">Book tune-up</a>
+              <div class="phone-list">
+                <div class="phone-item"><b>Flat repair</b><span>Tell us tire size + timing.</span></div>
+                <div class="phone-item"><b>New bike assembly</b><span>Boxed bike? Request build slot.</span></div>
+                <div class="phone-item"><b>Brake / gear issue</b><span>Describe the problem before arriving.</span></div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </header>
+
+    <section id="services">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="label">Services</div>
+          <h2>Everything riders ask for first.</h2>
+          <p class="lead">The page is structured around the actions a customer wants on their phone: repair, tune-up, assembly, parts, directions, and a direct call.</p>
+        </div>
+        <div class="cards">
+          <article class="card"><div class="icon">🔧</div><h3>Tune-ups</h3><p>Brakes, shifting, drivetrain, tires, and safety check before the next ride.</p></article>
+          <article class="card"><div class="icon">🛠️</div><h3>Repairs</h3><p>Flat fixes, brake adjustments, wheel truing, part replacement, and quick diagnostics.</p></article>
+          <article class="card"><div class="icon">📦</div><h3>Bike assembly</h3><p>Boxed bike builds, new parts, and safe setup for riders who bought online.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="book">
+      <div class="wrap book">
+        <div class="book-grid">
+          <div class="book-copy">
+            <div class="label">Lead capture + scheduling</div>
+            <h2>Let riders request service before they walk in.</h2>
+            <p class="lead">This is the money part: the live version sends repair requests to the shop, can text customers back, and can connect to a scheduling calendar.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="tel:+16469865221">Call now</a>
+              <a class="btn btn-secondary" href="#visit">Get directions</a>
+            </div>
+          </div>
+
+          <form class="form" id="repairForm">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" autocomplete="name" placeholder="Your name" />
+            </div>
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" autocomplete="tel" placeholder="Best number to reach you" />
+            </div>
+            <div class="field">
+              <label for="service">What do you need?</label>
+              <select id="service" name="service">
+                <option>Tune-up</option>
+                <option>Flat / tire repair</option>
+                <option>Brake or gear issue</option>
+                <option>Bike assembly</option>
+                <option>Parts / accessories</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="message">Notes</label>
+              <textarea id="message" name="message" placeholder="Tell us what is happening with the bike..."></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Preview request flow</button>
+            <div class="inline-result" id="result">Demo request captured. In the live build this would send to the shop by email/SMS.</div>
+            <div class="form-note">Demo only: in the paid/live build this button sends the request to the shop by email/SMS and logs the lead.</div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="reviews">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="label">Trust</div>
+          <h2>Make the good reputation obvious.</h2>
+          <p class="lead">A better mobile page surfaces the reasons people already choose the shop: speed, fair prices, and honest advice.</p>
+        </div>
+        <div class="proof">
+          <article class="card"><div class="stars">★★★★★</div><p class="quote">“Fast repair, fair price, and they explained exactly what my bike needed.”</p></article>
+          <article class="card"><div class="stars">★★★★★</div><p class="quote">“The neighborhood shop feel — helpful, direct, and no upsell.”</p></article>
+          <article class="card"><div class="stars">★★★★★</div><p class="quote">“Perfect for quick fixes before a weekend ride through Bay Ridge.”</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="visit">
+      <div class="wrap visit">
+        <div class="section-head">
+          <div class="label">Visit</div>
+          <h2>Easy to find. Easy to call.</h2>
+          <p class="lead">Bay Ridge Bicycles · 9124 4th Ave, Brooklyn, NY 11209. Open 7 days, 10 AM – 6 PM.</p>
+          <div class="hero-actions">
+            <a class="btn btn-blue" href="https://www.google.com/maps/search/?api=1&query=Bay%20Ridge%20Bicycles%209124%204th%20Ave%20Brooklyn%20NY" target="_blank" rel="noopener">Open in Maps</a>
+            <a class="btn btn-secondary" href="tel:+16469865221">Call (646) 986-5221</a>
+          </div>
+        </div>
+        <div class="map-card">
+          <div>
+            <div style="font-size:3rem;">📍</div>
+            <h3 style="margin:0.4rem 0; font-size:1.5rem;">9124 4th Ave</h3>
+            <p style="margin:0; color:var(--muted);">Live version can embed Google Maps and pull current reviews/hours.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bottom-cta">
+      <div class="wrap bottom-box">
+        <div>
+          <h2 style="font-size:clamp(2rem,7vw,3.5rem);">Ready to turn this into the real site?</h2>
+          <p>We can connect the real contact form, scheduling, domain, analytics, and follow-up once approved.</p>
+        </div>
+        <a class="btn btn-primary" href="mailto:?subject=Bay%20Ridge%20Bicycles%20mobile%20site%20preview&body=Here%20is%20the%20mobile%20preview%20concept%20for%20Bay%20Ridge%20Bicycles:%20%0A%0A[PASTE%20PREVIEW%20LINK%20HERE]%0A%0AIt%20shows%20a%20phone-first%20repair%20request,%20click-to-call,%20directions,%20reviews,%20and%20service%20sections.">Email this preview</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">Preview concept by Website Builds · noindex demo page · not connected to Bay Ridge Bicycles yet.</div>
+  </footer>
+
+  <script>
+    const form = document.getElementById('repairForm');
+    const result = document.getElementById('result');
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      result.classList.add('show');
+      result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  </script>
+</body>
+</html>
